@@ -14,14 +14,14 @@ jobs:
     - name: Build the Docker image
       run: |
         docker build . --file Dockerfile --tag ${GITHUB_REPOSITORY}:${GITHUB_REF##*/}
+        docker save -o ${GITHUB_REPOSITORY}-${GITHUB_REF##*/}.container ${GITHUB_REPOSITORY}:${GITHUB_REF##*/}
         
     - name: Upload container image
-      uses: appleboy/ssh-action@v0.1.7
+      uses: appleboy/scp-action@v0.1.3
       with:
         host: ${{ secrets.SSH_HOST }}
         username: ${{ secrets.SSH_USER }}
         port: ${{ secrets.SSH_PORT }}
         key: ${{ secrets.SSH_KEY }}
-        script: mkdir yolo && ls -l
-      
-        
+        source: "${GITHUB_REPOSITORY}-${GITHUB_REF##*/}.container"
+        target: "~/docker-images"
