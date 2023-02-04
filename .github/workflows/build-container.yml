@@ -14,5 +14,5 @@ jobs:
     - name: Build the Docker image
 #      run: docker build . --file Dockerfile --tag ${GITHUB_REPOSITORY}:${GITHUB_REF##*/}
       run: |
-        - echo ${GITHUB_REPOSITORY}
-        - echo ${GITHUB_REF##*/}
+        - echo "${GITHUB_REPOSITORY}"
+        - echo "${GITHUB_REF##*/}"
