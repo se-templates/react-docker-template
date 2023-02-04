@@ -16,3 +16,13 @@ jobs:
         docker build . --file Dockerfile --tag ${GITHUB_REPOSITORY}:${GITHUB_REF##*/}
         echo $DOCKER_TOKEN | docker login ghrc.io -u SebastianEibisch --password-stdin
         
+    - name: Upload container image
+      uses: appleboy/ssh-action@v0.1.7
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USER }}
+        port: ${{ secrets.SSH_PORT }}
+        key: ${{ secrets.SSH_KEY }}
+        script: mkdir yolo && ls -l
+      
+        
