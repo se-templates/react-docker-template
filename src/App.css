@@ -1,38 +1,97 @@
-.App {
-  text-align: center;
+:root {
+    --background-color: #38322F;
+    --highlight-primary-color: #474341;
+    --highlight-secondary-color: #474341;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+@font-face {
+    font-family: Nunito;
+    src: url(../public/Nunito-Medium.ttf);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+* {
+    font-family: Nunito;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+body {
+    background-color: var(--background-color);
 }
 
-.App-link {
-  color: #61dafb;
+#wrapper {
+    display: flex;
+    flex-direction: column;
+    
+    position: relative;
+    margin: 0 auto;
+
+    width: 100%;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#sidebar {
+    flex-grow: 1;
+
+    display: flex;
+    flex-direction: row;
+}
+
+#content {
+    flex-grow: 3;
+}
+
+#header {
+    flex-grow: 1;
+
+    display: flex;
+    justify-content: center;
+
+    z-index: 1;
+}
+
+#header img {
+    width: 20vw;
+}
+
+#nav {
+    position: relative;
+    z-index: 5;
+}
+
+
+
+
+
+
+@media only screen and (min-width: 751px) {
+
+    #wrapper {
+        flex-direction: row;
+        max-width: 1200px;
+    }
+
+    #sidebar {
+        flex-direction: column;
+    }
+
+}
+
+
+
+/*
+    DEBUG
+*/
+
+#nav {
+    background-color: red;
+}
+
+#header {
+    background-color: blue;
+}
+
+#content {
+    background-color: green;
+}
+
+#sidebar {
+    border: 1px dashed pink;
 }
