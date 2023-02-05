@@ -1,0 +1,40 @@
+name: Docker Image CI
+
+on:
+  push:
+    tags:        
+      - '*'  
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: |
+        docker build . --file Dockerfile --tag ${GITHUB_REPOSITORY}:${GITHUB_REF##*/}
+        docker save -o container ${GITHUB_REPOSITORY}:${GITHUB_REF##*/}
+        
+    - name: Upload container image
+      uses: appleboy/scp-action@v0.1.3
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USER }}
+        port: ${{ secrets.SSH_PORT }}
+        key: ${{ secrets.SSH_KEY }}
+        source: container
+        target: "~/docker-images"
+        
+    - name: Importing container
+      uses: appleboy/ssh-action@v0.1.7
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USER }}
+        port: ${{ secrets.SSH_PORT }}
+        key: ${{ secrets.SSH_KEY }}
+        script: | 
+          cd ~/docker-images
+          docker load -i container
+          
+      
